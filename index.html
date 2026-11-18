@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="zh-CN" data-lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>黄子健 Zijian Huang</title>
+<meta name="description" content="黄子健，浙江大学计算机科学与技术（图灵班）本科生。喜欢和 AI 一起，把身边遇到的问题做成真的能用的小工具。">
+<meta property="og:title" content="黄子健 Zijian Huang">
+<meta property="og:description" content="浙大图灵班大二学生，喜欢和 AI 一起，把身边遇到的问题做成真的能用的小工具。">
+<meta property="og:image" content="https://liljay-h.github.io/assets/avatar.jpg">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%232f5d50'/><text x='32' y='44' font-size='34' text-anchor='middle' fill='%23f6f3ec' font-family='Georgia,serif'>Z</text></svg>">
+<script>
+  // 尽早确定语言和主题，避免闪烁
+  (function () {
+    var d = document.documentElement, q = new URLSearchParams(location.search);
+    var lang = q.get('lang'), theme = null;
+    try { lang = lang || localStorage.getItem('lang'); theme = localStorage.getItem('theme'); } catch (e) {}
+    if (lang === 'en' || lang === 'zh') { d.dataset.lang = lang; d.lang = lang === 'en' ? 'en' : 'zh-CN'; }
+    if (theme === 'dark' || theme === 'light') d.dataset.theme = theme;
+  })();
+</script>
+<style>
+  :root {
+    --bg: #f6f3ec;
+    --surface: #fbf9f4;
+    --text: #23221f;
+    --muted: #6d6a62;
+    --faint: #9a968c;
+    --line: #e2ddd1;
+    --accent: #2f5d50;
+    --accent-soft: #e4ece7;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Noto Serif SC", "Source Han Serif SC", "Songti SC", "SimSun", serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #171816; --surface: #1e201d; --text: #e9e6de; --muted: #a8a49a; --faint: #7d7a72;
+      --line: #33352f; --accent: #8fbfa9; --accent-soft: #24302b; color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #171816; --surface: #1e201d; --text: #e9e6de; --muted: #a8a49a; --faint: #7d7a72;
+    --line: #33352f; --accent: #8fbfa9; --accent-soft: #24302b; color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 16px/1.75 var(--sans); -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  img { display: block; max-width: 100%; height: auto; }
+
+  /* 语言切换：每段文字写两份，按 data-lang 显示 */
+  html[data-lang="zh"] [lang="en"]:not(html) { display: none !important; }
+  html[data-lang="en"] [lang="zh"]:not(html) { display: none !important; }
+
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 24px; }
+
+  /* 顶栏 */
+  header.nav {
+    position: sticky; top: 0; z-index: 10;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 56px; gap: 16px; }
+  .nav nav { display: flex; gap: 22px; font-size: 14px; overflow-x: auto; scrollbar-width: none; }
+  .nav nav a { color: var(--muted); white-space: nowrap; }
+  .nav nav a:hover { color: var(--text); text-decoration: none; }
+  .tools { display: flex; align-items: center; gap: 14px; font-size: 13px; flex-shrink: 0; }
+  .lang button, .theme {
+    background: none; border: 0; padding: 4px 2px; color: var(--faint); cursor: pointer; font: inherit;
+  }
+  .lang button[aria-pressed="true"] { color: var(--text); font-weight: 600; }
+  .lang span { color: var(--line); }
+  .theme { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; color: var(--muted); }
+  .theme:hover { background: var(--accent-soft); }
+
+  /* 头部 */
+  .hero { display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: center; padding: 64px 0 52px; border-bottom: 1px solid var(--line); }
+  .hero h1 { font-family: var(--serif); font-weight: 400; font-size: 54px; line-height: 1.1; margin: 0 0 10px; letter-spacing: -0.01em; }
+  .hero h1 em { color: var(--accent); }
+  .hero .alt { color: var(--muted); font-size: 15px; margin: 0 0 18px; }
+  .hero .role { margin: 0; font-size: 17px; }
+  .hero .focus { margin: 2px 0 20px; color: var(--accent); font-size: 15px; }
+  .links { display: flex; flex-wrap: wrap; gap: 8px 22px; font-size: 14px; }
+  .links a { color: var(--muted); display: inline-flex; align-items: center; gap: 6px; }
+  .links a:hover { color: var(--accent); }
+  .links svg { width: 15px; height: 15px; }
+  .portrait {
+    width: 168px; aspect-ratio: 467 / 640; object-fit: cover;
+    border: 6px solid var(--surface); box-shadow: 0 1px 2px rgba(0,0,0,.08), 0 8px 24px rgba(0,0,0,.08);
+  }
+
+  /* 小节：左标题右内容 */
+  section.block { display: grid; grid-template-columns: 200px 1fr; gap: 32px; padding: 52px 0; border-bottom: 1px solid var(--line); }
+  section.block > h2 { font-family: var(--serif); font-weight: 400; font-size: 26px; line-height: 1.3; margin: 0; }
+  .body p { margin: 0 0 14px; }
+  .body p:last-child { margin-bottom: 0; }
+  .note { color: var(--muted); font-size: 14px; }
+
+  /* 主推作品 */
+  .feature { display: block; border: 1px solid var(--line); background: var(--surface); border-radius: 10px; overflow: hidden; margin-bottom: 28px; }
+  .feature .shot { border-bottom: 1px solid var(--line); aspect-ratio: 16 / 9; object-fit: cover; width: 100%; }
+  .feature .info { padding: 20px 22px 22px; }
+  .meta { font-size: 12.5px; color: var(--faint); letter-spacing: .02em; margin-bottom: 4px; display: flex; flex-wrap: wrap; gap: 4px 10px; }
+  .tag { color: var(--accent); background: var(--accent-soft); border-radius: 4px; padding: 0 7px; }
+  h3 { font-family: var(--serif); font-weight: 500; font-size: 21px; line-height: 1.35; margin: 0 0 8px; }
+  .feature p, .item p { color: var(--muted); font-size: 15px; margin: 0 0 12px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 14px; }
+
+  .items { display: grid; grid-template-columns: 1fr 1fr; gap: 0 32px; }
+  .item { padding: 18px 0; border-top: 1px solid var(--line); }
+  .item h3 { font-size: 18px; margin-bottom: 6px; }
+  .item p { font-size: 14.5px; margin-bottom: 8px; }
+
+  /* 荣誉 */
+  .honors { list-style: none; margin: 0; padding: 0; }
+  .honors li { display: grid; grid-template-columns: 64px 1fr; gap: 16px; padding: 14px 0; border-top: 1px solid var(--line); }
+  .honors li:first-child { border-top: 0; padding-top: 0; }
+  .year { font-size: 13px; color: var(--faint); padding-top: 4px; }
+  .honors strong { font-family: var(--serif); font-weight: 500; font-size: 18px; display: block; line-height: 1.4; }
+  .honors span.d { color: var(--muted); font-size: 14px; }
+
+  footer { padding: 32px 0 48px; color: var(--faint); font-size: 13px; }
+
+  @media (max-width: 760px) {
+    .wrap { padding: 0 16px; }
+    .nav nav { gap: 16px; }
+    .hero { grid-template-columns: 1fr; gap: 24px; padding: 40px 0 36px; }
+    .hero h1 { font-size: 40px; }
+    .portrait { width: 128px; order: -1; }
+    section.block { grid-template-columns: 1fr; gap: 16px; padding: 38px 0; }
+    .items { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 420px) {
+    .nav nav a.opt { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <nav aria-label="Sections">
+      <a href="#about"><span lang="zh">关于</span><span lang="en">About</span></a>
+      <a href="#work"><span lang="zh">作品与探索</span><span lang="en">Work</span></a>
+      <a href="#honors"><span lang="zh">荣誉</span><span lang="en">Honors</span></a>
+      <a href="#contact" class="opt"><span lang="zh">联系</span><span lang="en">Contact</span></a>
+    </nav>
+    <div class="tools">
+      <div class="lang" role="group" aria-label="Language">
+        <button type="button" data-set-lang="zh">中文</button><span>/</span><button type="button" data-set-lang="en">EN</button>
+      </div>
+      <button type="button" class="theme" aria-label="Toggle dark mode" title="深色 / 浅色">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="hero">
+    <div>
+      <h1><span lang="zh">黄子健</span><span lang="en">Zijian <em>Huang</em></span></h1>
+      <p class="alt"><span lang="zh">Zijian Huang</span><span lang="en">黄子健</span></p>
+      <p class="role">
+        <span lang="zh">浙江大学 · 计算机科学与技术（图灵班）本科生</span>
+        <span lang="en">Undergraduate, Computer Science (Turing Class), Zhejiang University</span>
+      </p>
+      <p class="focus">
+        <span lang="zh">AI 原生开发 · 把身边的问题做成小工具</span>
+        <span lang="en">Building small tools with AI agents</span>
+      </p>
+      <div class="links">
+        <a href="mailto:2694638180@qq.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg><span lang="zh">邮箱</span><span lang="en">Email</span> ↗</a>
+        <a href="https://github.com/LilJay-H"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.68 0-1.26.45-2.28 1.19-3.08-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.82 1.19 3.08 0 4.41-2.7 5.38-5.27 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg>GitHub ↗</a>
+      </div>
+    </div>
+    <img class="portrait" src="assets/avatar.jpg" width="467" height="640" alt="黄子健 Zijian Huang">
+  </div>
+
+  <section class="block" id="about">
+    <h2><span lang="zh">关于我</span><span lang="en">About</span></h2>
+    <div class="body">
+      <p lang="zh">我是浙江大学计算机科学与技术专业（图灵班）的大二学生，2025 年入学。</p>
+      <p lang="en">I'm a second-year undergraduate in Computer Science at Zhejiang University, in the Turing Class, which I joined in 2025.</p>
+      <p lang="zh">我喜欢和 AI 一起，把自己身边遇到的问题做成真的能用的小工具。做东西的时候，我负责定义问题、做产品判断和取舍，AI Agent 负责写大部分代码。下面这些大多是我的个人探索，也有几场黑客松里和队友一起做的作品。</p>
+      <p lang="en">I like building small tools with AI for problems I actually run into. I define the problem and make the product calls; AI agents write most of the code. Most of what's below is personal exploration, plus a few things built with teammates at hackathons.</p>
+      <p lang="zh">到目前为止，参加过校内外黑客松三四场。</p>
+      <p lang="en">So far I've taken part in three or four hackathons, on and off campus.</p>
+    </div>
+  </section>
+
+  <section class="block" id="work">
+    <h2><span lang="zh">作品与探索</span><span lang="en">Work &amp; Explorations</span></h2>
+    <div class="body">
+
+      <article class="feature">
+        <a href="https://liljay-h.github.io/ai-news-cover/"><img class="shot" src="assets/ai-news-cover.jpg" width="1280" height="720" alt="AI news cover 预览" loading="lazy"></a>
+        <div class="info">
+          <div class="meta"><span class="tag"><span lang="zh">个人作品</span><span lang="en">Personal</span></span><span>2026.11</span><span id="stars">GitHub ★ 5</span></div>
+          <h3>AI news cover</h3>
+          <p lang="zh">把桌面变成一张会更新的 AI 报纸。AI 资讯的来源太分散，我想让它离人再近一点，于是把 AIHOT 的精选、热点和日报搬到了桌面壁纸上。它按报纸的样子来设计：扫一眼标题、在原地展开、读摘要、跳到原文，每一步都在壁纸上完成。安装也交给 AI：把一条链接发给你的 AI 助手，它就能帮你装好。</p>
+          <p lang="en">Turns your desktop into an AI newspaper that keeps itself up to date. AI news is scattered across too many places, so I moved AIHOT's picks, trending items and daily digest onto the wallpaper. It reads like a newspaper: glance at headlines, expand a column in place, read a summary, then jump to the source, all without leaving the desktop. Installation is handed to AI too: send one link to your AI assistant and it sets everything up.</p>
+          <div class="actions">
+            <a href="https://liljay-h.github.io/ai-news-cover/"><span lang="zh">在线看看</span><span lang="en">Live demo</span> ↗</a>
+            <a href="https://github.com/LilJay-H/ai-news-cover"><span lang="zh">源码</span><span lang="en">Code</span> ↗</a>
+          </div>
+        </div>
+      </article>
+
+      <div class="items">
+        <article class="item">
+          <div class="meta"><span class="tag"><span lang="zh">黑客松</span><span lang="en">Hackathon</span></span><span>2026.10</span></div>
+          <h3><span lang="zh">软文工坊：华为 PC 校园营销 Agent</span><span lang="en">Ruanwen Workshop: a marketing agent for Huawei PCs</span></h3>
+          <p lang="zh">面向大学生写小红书营销图文。先澄清任务，再按 8 个大学生场景组织内容；产品主张附来源引文，发布前检查风险。5 人团队，我负责 idea 和前后端开发，赛后部署上线。</p>
+          <p lang="en">Writes Xiaohongshu-style marketing posts for college students. It clarifies the task first, frames content around eight student scenarios, cites sources for product claims and checks for risks before publishing. Team of five; I led the idea and built the frontend and backend. Deployed after the event.</p>
+          <div class="actions"><a href="https://github.com/LilJay-H/huawei-pc-marketing-agent-public"><span lang="zh">公开评审版</span><span lang="en">Code</span> ↗</a></div>
+        </article>
+
+        <article class="item">
+          <div class="meta"><span class="tag"><span lang="zh">黑客松</span><span lang="en">Hackathon</span></span><span>2026.3</span></div>
+          <h3><span lang="zh">灵知 | KnowledgeMap</span><span lang="en">Lingzhi | KnowledgeMap</span></h3>
+          <p lang="zh">AI 知识图谱学习平台，AI Hackathon Tour 高校联赛·2026 浙江大学站第三名。5 人团队，我担任产品角色，负责 idea、功能规划和路演，并参与前端开发。</p>
+          <p lang="en">An AI knowledge-graph learning platform. 3rd place at the Zhejiang University station of AI Hackathon Tour 2026. Team of five; I worked on product: the idea, feature planning and the pitch, plus some frontend work.</p>
+        </article>
+
+        <article class="item">
+          <div class="meta"><span class="tag"><span lang="zh">合作探索</span><span lang="en">Collaboration</span></span><span>2026.10</span></div>
+          <h3>CourseComplier TUI</h3>
+          <p lang="zh">把智云课堂录播、PPT 和转写整理成讲义的本地终端工具。与同学合作开发，主体不是我做的；我负责拆出独立的 TUI 公开仓库，并用真实课程实测和修复。</p>
+          <p lang="en">A local terminal tool that turns lecture recordings, slides and transcripts into study notes. Built with a classmate, who wrote most of it; I split out the standalone TUI repo and tested and fixed it on real courses.</p>
+          <div class="actions"><a href="https://github.com/LilJay-H/CourseComplier-TUI"><span lang="zh">源码</span><span lang="en">Code</span> ↗</a></div>
+        </article>
+
+        <article class="item">
+          <div class="meta"><span class="tag"><span lang="zh">个人探索</span><span lang="en">Personal</span></span><span>2026.10</span></div>
+          <h3><span lang="zh">B 站字幕桌面歌词</span><span lang="en">Bilibili Subtitles on Desktop</span></h3>
+          <p lang="zh">浏览器扩展加一个透明置顶的桌面窗口，看 B 站视频时字幕常驻桌面，可以边看边做别的事。附一键安装器。</p>
+          <p lang="en">A browser extension plus a transparent, always-on-top window that keeps Bilibili subtitles on your desktop while you do other things. Comes with a one-click installer.</p>
+          <div class="actions"><a href="https://github.com/LilJay-H/bili-sub-desktop"><span lang="zh">源码</span><span lang="en">Code</span> ↗</a></div>
+        </article>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="block" id="honors">
+    <h2><span lang="zh">荣誉</span><span lang="en">Honors</span></h2>
+    <div class="body">
+      <ul class="honors">
+        <li>
+          <div class="year">2026</div>
+          <div>
+            <strong><span lang="zh">AI Hackathon Tour 高校联赛·2026 浙江大学站 · 第三名</span><span lang="en">AI Hackathon Tour University League 2026, Zhejiang University Station · 3rd Place</span></strong>
+            <span class="d" lang="zh">作品“灵知 | KnowledgeMap”，获决赛入围奖，晋级全国总决赛。主办：魔搭社区 × Datawhale。</span>
+            <span class="d" lang="en">With “Lingzhi | KnowledgeMap”; finalist, advanced to the national finals. Hosted by ModelScope × Datawhale.</span>
+          </div>
+        </li>
+        <li>
+          <div class="year">2025</div>
+          <div>
+            <strong><span lang="zh">第十八届尖烽时刻全国商业模拟大赛 · MBA 组全国三等奖</span><span lang="en">18th “Jianfeng Shike” National Business Simulation Competition · National Third Prize, MBA Group</span></strong>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="block" id="contact">
+    <h2><span lang="zh">联系我</span><span lang="en">Contact</span></h2>
+    <div class="body">
+      <p lang="zh">如果你也在用 AI 做东西，或者想一起聊聊某个小工具的点子，欢迎来找我。</p>
+      <p lang="en">If you're building things with AI too, or want to talk through an idea for a small tool, feel free to reach out.</p>
+      <div class="links">
+        <a href="mailto:2694638180@qq.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>2694638180@qq.com</a>
+        <a href="https://github.com/LilJay-H"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.68 0-1.26.45-2.28 1.19-3.08-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.82 1.19 3.08 0 4.41-2.7 5.38-5.27 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg>github.com/LilJay-H</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span lang="zh">© 2026 黄子健 · 最后更新于 2026 年 11 月</span>
+    <span lang="en">© 2026 Zijian Huang · Last updated November 2026</span>
+  </footer>
+</main>
+
+<script>
+  (function () {
+    var d = document.documentElement;
+    function setLang(l) {
+      d.dataset.lang = l; d.lang = l === 'en' ? 'en' : 'zh-CN';
+      document.title = l === 'en' ? 'Zijian Huang 黄子健' : '黄子健 Zijian Huang';
+      document.querySelectorAll('[data-set-lang]').forEach(function (b) {
+        b.setAttribute('aria-pressed', b.dataset.setLang === l ? 'true' : 'false');
+      });
+      try { localStorage.setItem('lang', l); } catch (e) {}
+    }
+    document.querySelectorAll('[data-set-lang]').forEach(function (b) {
+      b.addEventListener('click', function () { setLang(b.dataset.setLang); });
+    });
+    setLang(d.dataset.lang || 'zh');
+
+    document.querySelector('.theme').addEventListener('click', function () {
+      var dark = d.dataset.theme ? d.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+      d.dataset.theme = dark ? 'light' : 'dark';
+      try { localStorage.setItem('theme', d.dataset.theme); } catch (e) {}
+    });
+
+    // 星数从 GitHub 实时读取，失败就保留写死的数字
+    fetch('https://api.github.com/repos/LilJay-H/ai-news-cover')
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (j) { if (j && typeof j.stargazers_count === 'number') document.getElementById('stars').textContent = 'GitHub ★ ' + j.stargazers_count; })
+      .catch(function () {});
+  })();
+</script>
+</body>
+</html>
